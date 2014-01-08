@@ -15,54 +15,63 @@ namespace calcMax
             int day = int.Parse(line[1]);
 
             // 商品の価格
-            int[] price = new int[goodsNum];
+            int[] prices = new int[goodsNum];
             int count = 0;
-            foreach (int p in price)
+            foreach (int p in prices)
             {
-                price[count] = int.Parse(System.Console.ReadLine().Trim());
+                prices[count] = int.Parse(System.Console.ReadLine().Trim());
                 count++;
             }
 
             // 目標金額
             count = 0;
-            int[] goalPrice = new int[day];
-            foreach (int p in goalPrice)
+            int[] goalPrices = new int[day];
+            foreach (int p in goalPrices)
             {
-                goalPrice[count] = int.Parse(System.Console.ReadLine().Trim());
+                goalPrices[count] = int.Parse(System.Console.ReadLine().Trim());
                 count++;
             }
 
-            count = 0;
-            foreach (int goal in goalPrice)
+            foreach (int goal in goalPrices)
             {
-                int max = 0;
-                bool bEnd = false;
-                for (int i = 0; i < price.Length; i++)
-                {
-                    for (int k = i + 1; k < price.Length; k++)
-                    {
-                        int p = price[i] + price[k];
-                        if (p <= goal)
-                        {
-                            if (p == goal)
-                            {
-                                bEnd = true;
-                                max = p;
-                                break;
-                            }
-                            else if (p > max)
-                            {
-                                max = p;
-                            }
-                        }
-                    }
-
-                    if (bEnd)
-                        break;
-                }
+                int max = SearchMax(goal, prices);
 
                 Console.WriteLine(max.ToString());
             }
+        }
+
+        static int SearchMax(int goal, int[] prices)
+        {
+            int max = 0;
+            for (int i = 0; i < prices.Length; i++)
+            {
+                if (prices[i] >= goal)
+                {
+                    continue;
+                }
+
+                for (int k = i + 1; k < prices.Length; k++)
+                {
+                    if (prices[k] >= goal)
+                    {
+                        continue;
+                    }
+
+                    int p = prices[i] + prices[k];
+                    if (p <= goal)
+                    {
+                        if (p == goal)
+                        {
+                            return p;
+                        }
+                        else if (p > max)
+                        {
+                            max = p;
+                        }
+                    }
+                }
+            }
+            return max;
         }
     }
 }
