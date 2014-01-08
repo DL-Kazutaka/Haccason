@@ -31,6 +31,7 @@ namespace calcMax
                 goalPrices[count] = int.Parse(System.Console.ReadLine().Trim());
                 count++;
             }
+            Array.Sort(prices);
 
             foreach (int goal in goalPrices)
             {
@@ -43,14 +44,14 @@ namespace calcMax
         static int SearchMax(int goal, int[] prices)
         {
             int max = 0;
-            for (int i = 0; i < prices.Length; i++)
+            for (int i = 0; i < prices.Length - 1; i++)
             {
                 if (prices[i] >= goal)
                 {
                     continue;
                 }
 
-                for (int k = i + 1; k < prices.Length; k++)
+                for (int k = prices.Length - 1; k > i; k--)
                 {
                     if (prices[k] >= goal)
                     {
