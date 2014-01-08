@@ -9,6 +9,7 @@ namespace calcMax
     {
         static void Main(string[] args)
         {
+            // 商品数とキャンペーン日数の取得
             var line = System.Console.ReadLine().Trim().Split(' ');
             int goodsNum = int.Parse(line[0]);
             int day = int.Parse(line[1]);
@@ -32,27 +33,26 @@ namespace calcMax
             }
 
             count = 0;
-            int goalValue = 0;
             foreach (int goal in goalPrice)
             {
+                int max = 0;
                 bool bEnd = false;
-                foreach (int value in price)
+                for (int i = 0; i < price.Length; i++)
                 {
-                    foreach (int value2 in price)
+                    for (int k = i + 1; k < price.Length; k++)
                     {
-                        int thisPrice = value + value2;
-                        if (thisPrice == goal)
+                        int p = price[i] + price[k];
+                        if (p <= goal)
                         {
-                            goalValue = thisPrice;
-                            bEnd = true;
-                            break;
-                        }
-
-                        if (thisPrice <= goal)
-                        {
-                            if (thisPrice > goalValue)
+                            if (p == goal)
                             {
-                                goalValue = thisPrice;
+                                bEnd = true;
+                                max = p;
+                                break;
+                            }
+                            else if (p > max)
+                            {
+                                max = p;
                             }
                         }
                     }
@@ -61,7 +61,7 @@ namespace calcMax
                         break;
                 }
 
-                Console.WriteLine(goalValue.ToString());
+                Console.WriteLine(max.ToString());
             }
         }
     }
